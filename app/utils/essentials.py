@@ -1,6 +1,12 @@
 import csv
 import calendar
 import os
+import streamlit as st
+import datetime
+def convert_to_datetime(date_string):
+    date_format = "%Y-%b-%d"
+    datetime_object = datetime.strptime(date_string, date_format)
+    return datetime_object.date()
 
 def findDay(date):
     year, month, day = (int(i) for i in date.split('-'))    
@@ -31,3 +37,41 @@ def read_from_csv(date):
         reader = csv.reader(file)
         data = list(reader)
     return data
+
+def add_rows(rows):
+    my_table = f"""<tr align="center">
+                        <th>Subject</th>
+                        <th>Period</th>
+                        <th>C.W.</th>
+                        <th>H.W.</th>
+                    </tr>
+                    {rows}"""
+    return my_table
+
+
+def show_table(data, date):
+    rows = []
+    date = f"""{date} ({findDay(str(date))})"""
+    for row in data:
+        if len(row)>1:
+            rows.append(f"""
+                <tr align="center">
+                    <td>{str(row[1])}</td>
+                    <td>{str(row[2])}</td>
+                    <td>{row[3]}</td>
+                    <td>{row[4]}</td>
+                </tr>
+            """)
+        if len(row)==1:
+            rows.append(f"""
+                <tr align="center">
+                    <td colspan=4>{"".join(row)}</td>
+                </tr>
+            """)
+    rows = """""".join(rows)
+    st.markdown(f"""
+                <table align="middle" style="width:100%">
+                <tr align="center"><th style='background-color:aqua'>Date & Day</th><td colspan=3>{date}</td></tr>
+                    {add_rows(rows)}
+                </table>
+                """, unsafe_allow_html=True)

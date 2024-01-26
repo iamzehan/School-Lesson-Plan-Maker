@@ -44,7 +44,7 @@ def show_table(data,date):
             """)
     rows = """""".join(rows)
     st.markdown(f"""
-                <table align="center">
+                <table align="center" style='width:100%!important;'>
                 <tr align="center"><th style='background-color:aqua'>Date & Day</th><td colspan=3>{date}</td></tr>
                     {add_rows(rows)}
                 </table>
