@@ -53,6 +53,7 @@ def show_table(data,date):
 
 def main():
     with st.container(border=True):
+        st.markdown("""<div style='page-break-after: always'></div>""")
         st.markdown("""<center><img height=100 width=100 style='border-radius: 50px' src="https://shorturl.at/imMSW" </center>""", unsafe_allow_html=True)
         st.markdown("""<h2 align='center'> Lesson Plan maker </h2>""", unsafe_allow_html=True)
         col1, _ = st.columns([2,8])

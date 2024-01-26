@@ -2,7 +2,7 @@ import csv
 import calendar
 import os
 import streamlit as st
-import datetime
+from datetime import datetime
 def convert_to_datetime(date_string):
     date_format = "%Y-%b-%d"
     datetime_object = datetime.strptime(date_string, date_format)
