@@ -1,6 +1,7 @@
 import os
 import csv
 import streamlit as st
+from streamlit.components.v1 import html
 from utils.essentials import (
     date_translate,
     findDay,
@@ -18,6 +19,18 @@ def read_from_csv(path):
         data = list(reader)
     return data
 
+def render_all_tables(filtered_files):
+    # reading the files in a loop
+    tables = []
+    for file in filtered_files:
+        st.spinner("Loading...")
+        st.write("""<br>""",unsafe_allow_html=True)
+        date = convert_to_datetime(f"{year}-{month}-{file.replace('.csv','')}")
+        data = read_from_csv(path+file)
+        tables.append(f"""{show_table(data, date)}
+                    """)
+    return ("""<br>""".join(tables))
+
 if __name__ == "__main__":
     # this will take the range of dates
     with st.sidebar:
@@ -27,6 +40,7 @@ if __name__ == "__main__":
         st.markdown("<h2 align='center'> Range of Date </h2>", unsafe_allow_html=True)
         start = st.date_input("From: ", format="DD/MM/YYYY")
         end = st.date_input("To: ", format="DD/MM/YYYY")
+        
         # select header sizes
         size = st.slider("Select header size:",min_value=12, value=18, max_value=24)
         live = st.checkbox("Edit :red[Live!]")
@@ -38,28 +52,27 @@ if __name__ == "__main__":
         
         generate = st.button("Generate 🗒️", use_container_width=True, type="primary")
         
+        
+    table = f"""<div id = 'print', style='background-color:white!important'><center><img height=40 width=40 style='border-radius: 50px' src="https://shorturl.at/imMSW"></center>
+                    <h2 align='center' style='font-size:{size}px;'> Al-Burooj International School </h2>
+                    <center>Class: {_class} ({section}) </center>
+                    <center>(From {start}, {findDay(str(start))} to {end}, {findDay(str(end))})</center>
+                    {render_all_tables(filtered_files)}</div>"""
+        
     if generate or live:
         # main body starts
         with st.container():
             # logo
-            st.markdown("""<center><img height=40 width=40 style='border-radius: 50px' src="https://shorturl.at/imMSW" </center>""", unsafe_allow_html=True)
+            st.markdown("""<span style='page-break-after: always'></span>""", unsafe_allow_html=True)
+            
+            st.markdown(table, unsafe_allow_html=True)
+    
+    
+    
 
-            # Title
-            st.markdown(f"<h2 align='center' style='font-size:{size}px;'> Al-Burooj International School </h2>", unsafe_allow_html=True)
+            
 
-            # class and section
-            st.markdown(f"<center>Class: {_class} ({section}) </center>",unsafe_allow_html=True)
-
-            # date range
-            st.markdown(f"<center>(From {start}, {findDay(str(start))} to {end}, {findDay(str(end))})</center>",unsafe_allow_html=True)
-
-            # reading the files in a loop
-            for file in filtered_files:
-                st.spinner("Loading...")
-                st.write("""<br>""",unsafe_allow_html=True)
-                date = convert_to_datetime(f"{year}-{month}-{file.replace('.csv','')}")
-                data = read_from_csv(path+file)
-                show_table(data, date)
+            
     
     
 

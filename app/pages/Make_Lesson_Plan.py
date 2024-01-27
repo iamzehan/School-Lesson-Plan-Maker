@@ -1,59 +1,13 @@
-from datetime import datetime as dt
 import streamlit as st
 from utils.essentials import (
-    date_translate,
     findDay,
     read_from_csv,
-    write_to_csv
+    write_to_csv,
+    show_table
 )
-
-def add_rows(rows):
-    my_table = f"""<tr align="center">
-                        <th>Subject</th>
-                        <th>Period</th>
-                        <th>C.W.</th>
-                        <th>H.W.</th>
-                    </tr>
-                    {rows}"""
-    return my_table
-
-
-        
-
-def show_table(data,date):
-    rows = []
-    rowspan=0
-    year, month, day = date_translate(str(date))
-    date = f"""{day} - {month} - {year} <br> ({findDay(str(date))})"""
-    for row in data:
-        if len(row)>1:
-            rows.append(f"""
-                <tr align="center">
-                    <td>{str(row[1])}</td>
-                    <td>{str(row[2])}</td>
-                    <td>{row[3]}</td>
-                    <td>{row[4]}</td>
-                </tr>
-            """)
-        if len(row)==1:
-            rowspan+=1
-            rows.append(f"""
-                <tr align="center">
-                    <td colspan=4>{"".join(row)}</td>
-                </tr>
-            """)
-    rows = """""".join(rows)
-    st.markdown(f"""
-                <table align="center" style='width:100%!important;'>
-                <tr align="center"><th style='background-color:aqua'>Date & Day</th><td colspan=3>{date}</td></tr>
-                    {add_rows(rows)}
-                </table>
-                """, unsafe_allow_html=True)
-
 
 def main():
     with st.container(border=True):
-        st.markdown("""<div style='page-break-after: always'></div>""")
         st.markdown("""<center><img height=100 width=100 style='border-radius: 50px' src="https://shorturl.at/imMSW" </center>""", unsafe_allow_html=True)
         st.markdown("""<h2 align='center'> Lesson Plan maker </h2>""", unsafe_allow_html=True)
         col1, _ = st.columns([2,8])
@@ -92,7 +46,7 @@ def main():
             data = read_from_csv(str(date))
     if data:
         with st.expander("Preview"):
-            show_table(data, date)
+            st.markdown(show_table(data, date), unsafe_allow_html=True)
         
 
 

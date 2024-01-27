@@ -1,8 +1,8 @@
+import os
 import csv
 import calendar
-import os
-import streamlit as st
 from datetime import datetime
+
 def convert_to_datetime(date_string):
     date_format = "%Y-%b-%d"
     datetime_object = datetime.strptime(date_string, date_format)
@@ -54,24 +54,18 @@ def show_table(data, date):
     date = f"""{date} ({findDay(str(date))})"""
     for row in data:
         if len(row)>1:
-            rows.append(f"""
-                <tr align="center">
-                    <td>{str(row[1])}</td>
-                    <td>{str(row[2])}</td>
-                    <td>{row[3]}</td>
-                    <td>{row[4]}</td>
-                </tr>
-            """)
+            rows.append(f"""<tr align="center">
+                        <td>{str(row[1])}</td>
+                        <td>{str(row[2])}</td>
+                        <td>{row[3]}</td>
+                        <td>{row[4]}</td>
+                    </tr>
+                """)
         if len(row)==1:
-            rows.append(f"""
-                <tr align="center">
+            rows.append(f"""<tr align="center">
                     <td colspan=4>{"".join(row)}</td>
-                </tr>
-            """)
+                </tr>""")
     rows = """""".join(rows)
-    st.markdown(f"""
-                <table align="middle" style="width:100%">
-                <tr align="center"><th style='background-color:aqua'>Date & Day</th><td colspan=3>{date}</td></tr>
-                    {add_rows(rows)}
-                </table>
-                """, unsafe_allow_html=True)
+    return f"""<table align="middle" style="width:100%; border:1px solid black;">
+                <tr align="center" border:1px solid black;><th style='background-color:aqua'>Date & Day</th><td colspan=3>{date}</td></tr>
+                    {add_rows(rows)}</table>"""
