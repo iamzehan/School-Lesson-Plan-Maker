@@ -15,8 +15,12 @@ and
 ### Our landing page  <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Python.svg" alt="html5" width="20" height="20" style="vertical-align: middle"/> `Home.py`
 
 ### `📁 pages/`
+___
+
 Contains all the different page and routes.
 #### <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Python.svg" alt="html5" width="20" height="20" style="vertical-align: middle"/> `Make_Lesson_Plan.py`
+___
+
 Page that allows you to make lesson plans.
 
 ![Alt text|200](app/assets/image.png)
@@ -24,11 +28,16 @@ Page that allows you to make lesson plans.
 ![Alt text|200](app/assets/image-1.png)
 
 #### <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Python.svg" alt="html5" width="20" height="20" style="vertical-align: middle"/> `Print.py`
+___
+
 Allows you to filter the data according to date, class and section and print them in pdfs.
 
 ![Alt text](app/assets/image-2.png)
 
 ### `📁 utils/`
+
+___
+
 Contains <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Python.svg" alt="html5" width="20" height="20" style="vertical-align: middle"/>  `essentials.py` which is responsible for -
 
 * Generating Tables - `add_rows(), show_table()`
@@ -78,7 +87,6 @@ or
 python app/Home.py
 ```
 <h3 align="center">Technologies and Links</h3>
-
 
 ___
 
