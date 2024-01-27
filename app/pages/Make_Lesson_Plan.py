@@ -8,21 +8,21 @@ from utils.essentials import (
 
 def main():
     with st.container(border=True):
-        st.markdown("""<center><img height=100 width=100 style='border-radius: 50px' src="https://shorturl.at/imMSW" </center>""", unsafe_allow_html=True)
+        st.markdown("""<center><img height=100 width=100 style='border-radius: 50px' src="https://www.al-buroojbd.com/img/site/1650527711.png" </center>""", unsafe_allow_html=True)
         st.markdown("""<h2 align='center'> Lesson Plan maker </h2>""", unsafe_allow_html=True)
-        col1, _ = st.columns([2,8])
-        
-        with col1:
-            date = st.date_input("Pick a date: ", format="DD/MM/YYYY")
+        col1, col2, col3 = st.columns([4,4,4])
+        date = col1.date_input("Pick a date: ", format="DD/MM/YYYY")
+        _class = col2.selectbox("Class: ", options=["I","II","III","IV","V","VI","VII","VIII","IX", "X"] )
+        section = col3.selectbox("Section: ", ["Abyad"])
         try:
-            data = read_from_csv(str(date))
+            data = read_from_csv(str(date),_class,section)
         except:
             data = None
             st.error(f"No table created for {date}")
-            
-        type_note = st.selectbox("Type: ", options=["Regular", "Special"])
+        col1, col2, col3 = st.columns([3,4,3])
+        type_note = col2.radio("Plan Type: ", options=["Periodic", "Special"], horizontal=True)
 
-        if type_note == "Regular":
+        if type_note == "Periodic":
             col1, col2 = st.columns(2)
             with col1: 
                 subject = st.text_area("Subject:")
@@ -41,9 +41,9 @@ def main():
             
         submit = st.button("Add", use_container_width=True,type="primary")
         if submit:
-            write_to_csv(submission_data,str(date))
+            write_to_csv(submission_data,str(date),_class, section)
             st.empty()
-            data = read_from_csv(str(date))
+            data = read_from_csv(str(date),_class, section)
     if data:
         with st.expander("Preview"):
             st.markdown(show_table(data, date), unsafe_allow_html=True)
