@@ -44,28 +44,33 @@ if __name__ == "__main__":
         # select header sizes
         size = st.slider("Select header size:",min_value=12, value=18, max_value=24)
         live = st.checkbox("Edit :red[Live!]")
-        year, month, start_day = date_translate(str(start))
-        year, month, end_day = date_translate(str(end))
-        path = f"app/data/{year}/{month}/"
+        generate = st.button("Generate 🗒️", use_container_width=True, type="primary")
+    
+    year, month, start_day = date_translate(str(start))
+    year, month, end_day = date_translate(str(end))
+    path = f"app/data/{year}/{month}/Class - {_class}/Section - {section}/"
+    try:
         files = os.listdir(path)
         filtered_files = [file for file in files if int(start_day) <= int(file.replace(".csv","")) <= int(end_day)]
-        
-        generate = st.button("Generate 🗒️", use_container_width=True, type="primary")
-        
-        
-    table = f"""<div id = 'print', style='background-color:white!important'><center><img height=40 width=40 style='border-radius: 50px' src="https://shorturl.at/imMSW"></center>
+        table = f"""<div id = 'print', style='background-color:white!important'><center><img height=40 width=40 style='border-radius: 50px' src="https://www.al-buroojbd.com/img/site/1650527711.png"></center>
                     <h2 align='center' style='font-size:{size}px;'> Al-Burooj International School </h2>
                     <center>Class: {_class} ({section}) </center>
                     <center>(From {start}, {findDay(str(start))} to {end}, {findDay(str(end))})</center>
                     {render_all_tables(filtered_files)}</div>"""
+        if generate or live:
+            # main body starts
+            with st.container():
+                # logo
+                st.markdown("""<span style='page-break-after: always'></span>""", unsafe_allow_html=True)
+                
+                st.markdown(table, unsafe_allow_html=True)
+    except:
+        st.error(f"No data found for {start} - {end}, Class - {_class}, Section - {section}")
         
-    if generate or live:
-        # main body starts
-        with st.container():
-            # logo
-            st.markdown("""<span style='page-break-after: always'></span>""", unsafe_allow_html=True)
-            
-            st.markdown(table, unsafe_allow_html=True)
+        
+    
+        
+    
     
     
     
