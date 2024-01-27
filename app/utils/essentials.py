@@ -20,20 +20,20 @@ def date_translate(date):
     months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     return year, months[month-1], day
 
-def write_to_csv(row, date):
+def write_to_csv(row, date, _class, section):
     year, month, day = date_translate(date)
     # Create directories if they don't exist
-    directory = f'app/data/{year}/{month}/'
+    directory = f'app/data/{year}/{month}/Class - {_class}/Section - {section}'
     os.makedirs(directory, exist_ok=True)
 
     # Open the CSV file for writing
-    with open(f'{directory}{day}.csv', mode='a', newline='') as file:
+    with open(f'{directory}/{day}.csv', mode='a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(row)
         
-def read_from_csv(date):
+def read_from_csv(date, _class, section):
     year, month, day = date_translate(date)
-    with open(f'app/data/{year}/{month}/{day}.csv', mode='r') as file:
+    with open(f'app/data/{year}/{month}/Class - {_class}/Section - {section}/{day}.csv', mode='r') as file:
         reader = csv.reader(file)
         data = list(reader)
     return data
