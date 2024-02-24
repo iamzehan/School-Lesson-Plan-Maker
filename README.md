@@ -84,7 +84,7 @@ python ./main.py
 or 
 
 ```bash
-python app/Home.py
+streamlit run app/Home.py
 ```
 
 <h2 align="center"> <a href="https://www.docker.com/" target="_blank" rel="noreferrer"> <img src="https://wiki.hornbill.com/images/7/70/Docker_logo.png" alt="linux" width="40" height="40" style="vertical-align: middle"/> </a> Docker </h2>
